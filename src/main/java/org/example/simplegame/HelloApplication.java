@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -39,12 +40,13 @@ public class HelloApplication extends Application {
 
         Button optionsButton = new Button("Options");
         optionsButton.getStyleClass().add("button-style");
+        optionsButton.setOnAction(e->turnOptions());
 
         Button exitButton = new Button("Exit");
         exitButton.getStyleClass().add("button-style");
-        exitButton.setOnAction(e->Platform.exit());
+        exitButton.setOnAction(e -> Platform.exit());
 
-        VBox container = new VBox(playButton, optionsButton,exitButton);
+        VBox container = new VBox(playButton, optionsButton, exitButton);
         container.setAlignment(Pos.CENTER);
         container.setSpacing(10);
 
@@ -55,6 +57,26 @@ public class HelloApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         return scene;
+    }
+    private Parent optionsMenu(){
+
+        BorderPane pane=new BorderPane();
+
+        ComboBox<String> gameDifficulty=new ComboBox<>();
+        gameDifficulty.getItems().addAll("Normal","Hard","Easy");
+        gameDifficulty.setValue("Normal");
+
+        Button back=new Button("Back");
+        back.setOnAction(e->primaryStage.setScene(createMenuScene()));
+
+        VBox options=new VBox();
+        options.getChildren().addAll(gameDifficulty,back);
+        options.setAlignment(Pos.CENTER);
+        options.setSpacing(10);
+
+        pane.setCenter(options);
+
+        return pane;
     }
     private Parent createContent() {
 
@@ -84,6 +106,10 @@ public class HelloApplication extends Application {
 
     private void startGame() {
         Scene gameScene = new Scene(createContent(), 800, 600);
+        primaryStage.setScene(gameScene);
+    }
+    private void turnOptions(){
+        Scene gameScene = new Scene(optionsMenu(), 800, 600);
         primaryStage.setScene(gameScene);
     }
 
