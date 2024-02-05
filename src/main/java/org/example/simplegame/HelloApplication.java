@@ -1,5 +1,4 @@
 package org.example.simplegame;
-
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
@@ -18,7 +17,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,19 +34,27 @@ public class HelloApplication extends Application {
 
     private Scene createMenuScene() {
         Button playButton = new Button("Play");
+        playButton.getStyleClass().add("button-style");
         playButton.setOnAction(e -> startGame());
 
         Button optionsButton = new Button("Options");
+        optionsButton.getStyleClass().add("button-style");
 
-        BorderPane layout = new BorderPane();
-        VBox container=new VBox(playButton,optionsButton);
+        Button exitButton = new Button("Exit");
+        exitButton.getStyleClass().add("button-style");
+        exitButton.setOnAction(e->Platform.exit());
+
+        VBox container = new VBox(playButton, optionsButton,exitButton);
         container.setAlignment(Pos.CENTER);
         container.setSpacing(10);
 
+        BorderPane layout = new BorderPane();
         layout.setCenter(container);
 
+        Scene scene = new Scene(layout, 800, 600);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
-        return new Scene(layout, 800, 600);
+        return scene;
     }
     private Parent createContent() {
 
