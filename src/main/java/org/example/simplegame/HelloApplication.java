@@ -33,6 +33,8 @@ public class HelloApplication extends Application {
     private int winCounter=0;
     private int allBlocksInGame=200;
 
+    private double frequencyOfFallingBlocks=0.075;
+
     private Scene createMenuScene() {
         Button playButton = new Button("Play");
         playButton.getStyleClass().add("button-style");
@@ -65,6 +67,12 @@ public class HelloApplication extends Application {
         ComboBox<String> gameDifficulty=new ComboBox<>();
         gameDifficulty.getItems().addAll("Normal","Hard","Easy");
         gameDifficulty.setValue("Normal");
+        gameDifficulty.setOnAction(e -> {
+            String selectedDifficulty = gameDifficulty.getValue();
+            updateBlockFallingFrequency(selectedDifficulty);
+        });
+
+
 
         Button back=new Button("Back");
         back.setOnAction(e->primaryStage.setScene(createMenuScene()));
@@ -130,6 +138,24 @@ public class HelloApplication extends Application {
         root.getChildren().add(rect);
         return rect;
     }
+    private void updateBlockFallingFrequency(String difficulty){
+
+        switch (difficulty) {
+            case "Easy":
+                frequencyOfFallingBlocks=0.05;
+                break;
+            case "Normal":
+                frequencyOfFallingBlocks=0.075;
+                break;
+            case "Hard":
+                frequencyOfFallingBlocks=0.15;
+                break;
+            default:
+                frequencyOfFallingBlocks=0.075;
+                break;
+        }
+
+    }
 
     private void onUpdate() {
 
@@ -144,7 +170,7 @@ public class HelloApplication extends Application {
         }
         percentageLabel.setText(String.valueOf(winCounter)+"%");
 
-        if (Math.random() < 0.075&&allBlocksInGame>0) {
+        if (Math.random() < frequencyOfFallingBlocks&&allBlocksInGame>0) {
             blocks.add(spawnBlock());
             allBlocksInGame--;
         }
