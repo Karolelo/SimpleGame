@@ -30,8 +30,8 @@ public class HelloApplication extends Application {
     private Pane root;
     private Stage primaryStage;
     private List<Node> blocks = new ArrayList<>();
-    private int winCounter=0;
-    private int allBlocksInGame=200;
+    private int winCounter;
+    private int allBlocksInGame;
 
     private double frequencyOfFallingBlocks=0.075;
 
@@ -113,6 +113,9 @@ public class HelloApplication extends Application {
     }
 
     private void startGame() {
+        allBlocksInGame=200;
+        winCounter=0;
+
         Scene gameScene = new Scene(createContent(), 800, 600);
         primaryStage.setScene(gameScene);
     }
@@ -159,6 +162,7 @@ public class HelloApplication extends Application {
 
     private void onUpdate() {
 
+
         Iterator<Node> iterator = blocks.iterator();
         while (iterator.hasNext()) {
             Node block = iterator.next();
@@ -179,57 +183,50 @@ public class HelloApplication extends Application {
     }
 
     private void checkState() {
-
-        if (allBlocksInGame==0&&blocks.isEmpty()) {
-
-            timer.stop();
-            String win = "YOU LOSE";
-
-            HBox hBox = new HBox();
-            hBox.setTranslateX(300);
-            hBox.setTranslateY(250);
-            root.getChildren().add(hBox);
-
-            for (int i = 0; i < win.toCharArray().length; i++) {
-                char letter = win.charAt(i);
-
-                Text text = new Text(String.valueOf(letter));
-                text.setFont(Font.font(48));
-                text.setOpacity(0);
-
-                hBox.getChildren().add(text);
-
-                FadeTransition ft = new FadeTransition(Duration.seconds(0.66), text);
-                ft.setToValue(1);
-                ft.setDelay(Duration.seconds(i * 0.15));
-                ft.play();
-            }
+        if (allBlocksInGame == 0 && blocks.isEmpty()) {
+            displayEndGameMessage("YOU LOSE");
         }
 
-        if (winCounter>=100) {
-            timer.stop();
-            String win = "YOU WIN";
-
-            HBox hBox = new HBox();
-            hBox.setTranslateX(300);
-            hBox.setTranslateY(250);
-            root.getChildren().add(hBox);
-
-            for (int i = 0; i < win.toCharArray().length; i++) {
-                char letter = win.charAt(i);
-
-                Text text = new Text(String.valueOf(letter));
-                text.setFont(Font.font(48));
-                text.setOpacity(0);
-
-                hBox.getChildren().add(text);
-
-                FadeTransition ft = new FadeTransition(Duration.seconds(0.66), text);
-                ft.setToValue(1);
-                ft.setDelay(Duration.seconds(i * 0.15));
-                ft.play();
-            }
+        if (winCounter >= 100) {
+            displayEndGameMessage("YOU WIN");
         }
+    }
+
+
+    private void displayEndGameMessage(String message) {
+        timer.stop();
+
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+        layout.setTranslateX(300);
+        layout.setTranslateY(250);
+
+        HBox hBox = new HBox();
+        for (int i = 0; i < message.toCharArray().length; i++) {
+            char letter = message.charAt(i);
+
+            Text text = new Text(String.valueOf(letter));
+            text.setFont(Font.font(48));
+            text.setOpacity(0);
+
+            hBox.getChildren().add(text);
+
+            FadeTransition ft = new FadeTransition(Duration.seconds(0.66), text);
+            ft.setToValue(1);
+            ft.setDelay(Duration.seconds(i * 0.15));
+            ft.play();
+        }
+
+        Button restartButton = new Button("Restart");
+        restartButton.setOnAction(e -> startGame());
+
+        Button exitButton = new Button("Exit");
+        exitButton.setOnAction(e -> Platform.exit());
+
+
+        layout.getChildren().addAll(hBox, restartButton, exitButton);
+
+        root.getChildren().add(layout);
     }
 
     @Override
