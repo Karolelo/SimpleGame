@@ -32,7 +32,6 @@ public class HelloApplication extends Application {
     private List<Node> blocks = new ArrayList<>();
     private int winCounter;
     private int allBlocksInGame;
-
     private double frequencyOfFallingBlocks=0.075;
 
     private Scene createMenuScene() {
@@ -64,6 +63,10 @@ public class HelloApplication extends Application {
 
         BorderPane pane=new BorderPane();
 
+        Label label=new Label("Choose difficulty level");
+        label.getStyleClass().add("label");
+
+
         ComboBox<String> gameDifficulty=new ComboBox<>();
         gameDifficulty.getItems().addAll("Normal","Hard","Easy");
         gameDifficulty.setValue("Normal");
@@ -71,19 +74,21 @@ public class HelloApplication extends Application {
             String selectedDifficulty = gameDifficulty.getValue();
             updateBlockFallingFrequency(selectedDifficulty);
         });
-
+        gameDifficulty.getStyleClass().add("combo-box");
 
 
         Button back=new Button("Back");
         back.setOnAction(e->primaryStage.setScene(createMenuScene()));
+        back.getStyleClass().add("button-style");
+
 
         VBox options=new VBox();
-        options.getChildren().addAll(gameDifficulty,back);
+        options.getChildren().addAll(label,gameDifficulty,back);
         options.setAlignment(Pos.CENTER);
         options.setSpacing(10);
 
         pane.setCenter(options);
-
+        pane.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         return pane;
     }
     private Parent createContent() {
@@ -219,14 +224,17 @@ public class HelloApplication extends Application {
 
         Button restartButton = new Button("Restart");
         restartButton.setOnAction(e -> startGame());
+        restartButton.getStyleClass().add("button-style");
+
 
         Button exitButton = new Button("Exit");
         exitButton.setOnAction(e -> Platform.exit());
-
+        exitButton.getStyleClass().add("button-style");
 
         layout.getChildren().addAll(hBox, restartButton, exitButton);
 
         root.getChildren().add(layout);
+        root.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
     }
 
     @Override
