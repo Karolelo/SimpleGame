@@ -8,3 +8,20 @@
     -fx-padding: 10px 20px;
     -fx-font-size: 16px;
 }
+.combo-box {
+    -fx-background-color: #7730c9;
+    -fx-border-color: black;
+    -fx-text-fill: white;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 16px;
+}
+.label {
+    -fx-text-fill: #7730c9;
+    -fx-background-color: white;
+    -fx-font-size: 28px;
+    -fx-border: none;
+    -fx-text-alignment: center;
+}
