@@ -18,10 +18,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+@Slf4j
 public class HelloApplication extends Application {
 
     private Label percentageLabel = new Label("0%");
