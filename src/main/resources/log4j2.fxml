@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+
+    <Appenders>
+        <Console name="MyConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+
+
+    <Loggers>
+        <Logger name="com.app.service" level="debug" additivity="false">
+            <AppenderRef ref="MyConsoleAppender" />
+        </Logger>
+
+        <Logger name="MyLogger" level="debug" additivity="false">
+            <AppenderRef ref="MyConsoleAppender" />
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="MyConsoleAppender" />
+        </Root>
+    </Loggers>
+</Configuration>
